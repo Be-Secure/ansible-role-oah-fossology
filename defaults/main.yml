@@ -1,2 +1,6 @@
 ---
 # defaults file for ansible-role-oah-fossology
+
+fossology_repo_url: https://github.com/fossology/fossology
+fossology_repo_dest: /home/arun/fossology
+# fossology_dir: "{{ fossology_repo_dest }}"
