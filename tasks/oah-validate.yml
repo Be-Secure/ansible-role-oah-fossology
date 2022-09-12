@@ -1,1 +1,17 @@
 ---
+- name: Checking if docker image avaialable
+  become: yes
+  ansible.builtin.docker_image_info:
+    name:
+      - fossology/fossology
+  register: result
+
+- name: Message
+  debug:
+    msg: "Fossology found"
+  when: result.images | length == 1
+
+- name: Message
+  ansible.builtin.debug:
+    msg: "Fossology not found"
+  when: result.images | length == 0
