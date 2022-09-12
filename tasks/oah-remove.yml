@@ -4,3 +4,4 @@
   community.docker.docker_image:
     name: fossology/fossology
     rm: yes
+    state: absent
