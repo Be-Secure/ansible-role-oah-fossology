@@ -1,7 +1,5 @@
 ---
 - name: Removing docker image
   become: yes
-  community.docker.docker_image:
-    name: fossology/fossology
-    rm: yes
-    state: absent
+  shell: |
+    docker image rm fossology/fossology 
