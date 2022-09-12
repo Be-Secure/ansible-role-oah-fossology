@@ -1,8 +1,21 @@
 ---
-- name: Pulling down docker image from fossology/fossology
-  ansible.builtin.include_tasks: install_from_docker.yml
-  when: fosslogy_install_from_docker == true
+- name: Adding user to docker group
+  become: yes
+  shell: |
+    gpasswd -a $USER docker
+    newgrp docker
 
-- name: Installing fossology from source
-  ansible.builtin.include_tasks: install_from_source.yml
-  when: fossology_install_from_source == true
+- name: Make sure docker is started
+  service:
+    name: docker
+    state: started
+
+- name: Pulling fossology image
+  become: yes
+  community.docker.docker_image:
+    name: fossology/fossology
+    source: pull
+    state: present
+
+
+
