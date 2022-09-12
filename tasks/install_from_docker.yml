@@ -6,6 +6,7 @@
     state: started
 
 - name: Pulling fossology image
+  become: yes
   community.docker.docker_image:
     name: fossology/fossology
     source: pull
