@@ -1,0 +1,14 @@
+---
+
+- name: Make sure docker is started
+  service:
+    name: docker
+    state: started
+
+- name: Pulling fossology image
+  community.docker.docker_image:
+    name: fossology/fossology
+    source: pull
+    state: present
+
+

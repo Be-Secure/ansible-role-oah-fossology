@@ -1,30 +1,8 @@
 ---
+- name: Pulling down docker image from fossology/fossology
+  ansible.builtin.include_tasks: install_from_docker.yml
+  when: fosslogy_install_from_docker == true
 
-- name: Install lsb-release
-  become: yes
-  apt:
-    name: lsb-release
-    state: present
-
-- name: check whether fossology dir exists
-  stat:
-    path: "{{ fossology_repo_dest }}"
-  register: fossology_dir
-
-- name: Clone repo
-  ansible.builtin.git:
-    repo: "{{ fossology_repo_url }}"
-    dest: "{{ fossology_repo_dest }}"
-  when: not fossology_dir.stat.exists
-
-- name: Install dependencies
-  become: yes
-  shell: |
-    cd /home/arun/fossology
-    utils/fo-installdeps --everything -y
-
-# - name: Install dependencies
-#   become: yes
-#   shell: utils/fo-installdeps
-
-
+- name: Installing fossology from source
+  ansible.builtin.include_tasks: install_from_source.yml
+  when: fossology_install_from_source == true
