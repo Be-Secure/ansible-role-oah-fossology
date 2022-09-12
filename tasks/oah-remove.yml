@@ -1,0 +1,5 @@
+---
+- name: Removing docker image
+  become: yes
+  shell: |
+    docker image rm -f fossology/fossology 

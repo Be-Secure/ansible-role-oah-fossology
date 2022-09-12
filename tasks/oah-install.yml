@@ -1,0 +1,35 @@
+---
+
+- name: Install python-docker requirements
+  become: yes
+  ansible.builtin.apt:
+    name:
+      - python3-docker
+    state: latest
+
+- name: Check if user exist in docker group
+  ansible.builtin.shell: |
+    grep -q /etc/group -e "docker" 
+  register: result
+
+- name: Adding user to docker group
+  become: yes
+  shell: |
+    gpasswd -a $USER docker
+    newgrp docker
+  when: result.rc != 0
+
+- name: Make sure docker is started
+  service:
+    name: docker
+    state: started
+
+- name: Pulling fossology image
+  become: yes
+  community.docker.docker_image:
+    name: fossology/fossology
+    source: pull
+    state: present
+
+
+
