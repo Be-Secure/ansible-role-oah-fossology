@@ -1,0 +1,8 @@
+---
+
+- name: Pulling latest fossology image
+  become: yes
+  community.docker.docker_image:
+    name: fossology/fossology
+    source: pull
+    state: latest
