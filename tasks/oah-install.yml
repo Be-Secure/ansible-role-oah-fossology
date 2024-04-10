@@ -1,7 +1,5 @@
 - name: Check if Docker is installed
   command: docker --version
-  args:
-    warn: false
   register: docker_check
 
 - name: Print message
