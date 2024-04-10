@@ -40,13 +40,9 @@
 
 - name: Check if Fossology image is present
   become: yes
-  shell: docker images fossology/fossology
+  shell: docker images fossology/fossology | grep -q fossology
   register: fossology_image_check
   failed_when: false
-
-- name: debug
-  debug:
-    msg: "print message {{ fossology_image_check.stdout }}"
 
 - name: Print message
   debug:
