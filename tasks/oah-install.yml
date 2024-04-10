@@ -39,6 +39,7 @@
     state: started
 
 - name: Check if Fossology image is present
+  become: yes
   command: docker images fossology/fossology
   register: fossology_image_check
   failed_when: fossology_image_check.rc != 0
