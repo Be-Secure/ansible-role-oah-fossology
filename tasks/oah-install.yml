@@ -44,6 +44,10 @@
   register: fossology_image_check
   failed_when: fossology_image_check.rc != 0
 
+- name: Debug message
+  debug:
+    msg: Debug message {{ fossology_image_check }}
+
 - name: Print message
   debug:
     msg: Fossology image already exist
