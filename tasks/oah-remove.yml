@@ -1,5 +1,16 @@
----
+- name: Check if Fossology image is present
+  become: yes
+  command: docker images fossology/fossology
+  register: fossology_image_check
+  failed_when: fossology_image_check.rc != 0
+
+- name: Print message
+  debug:
+    msg: Fossology image does not exist
+  when: fossology_image_check.rc != 0
+
 - name: Removing docker image
   become: yes
   shell: |
-    docker image rm -f fossology/fossology 
+    docker image rm -f fossology/fossology
+  when: fossology_image_check.rc == 0

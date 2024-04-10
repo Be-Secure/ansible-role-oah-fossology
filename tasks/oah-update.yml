@@ -1,5 +1,3 @@
----
-
 - name: Pulling latest fossology image
   become: yes
   community.docker.docker_image:
