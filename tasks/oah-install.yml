@@ -46,7 +46,7 @@
 
 - name: debug
   debug:
-    msg: "print message {{ fossology_image_check }}"
+    msg: "print message {{ fossology_image_check.stdout }}"
 
 - name: Print message
   debug:
