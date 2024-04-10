@@ -42,7 +42,6 @@
   become: yes
   shell: docker images fossology/fossology | grep -q fossology
   register: fossology_image_check
-  failed_when: fossology_image_check.rc != 0
 
 - name: Debug message
   debug:
