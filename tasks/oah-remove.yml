@@ -4,15 +4,15 @@
   register: fossology_image_check
   failed_when: false
 
-- name: Get Docker image facts
-  become: yes
-  community.docker.docker_container_info:
-    name: fossology/fossology
-  register: docker_image
+# - name: Get Docker image facts
+#   become: yes
+#   community.docker.docker_container_info:
+#     hostname: fossology/fossology
+#   register: docker_image
 
-- name: Display Docker container ID
+- name: Display Docker images
   debug:
-    msg: "Docker ID:{{ docker_image }}"
+    msg: "Docker ID:{{ fossology_image_check }}"
   failed_when: false
 
 - name: Print message
