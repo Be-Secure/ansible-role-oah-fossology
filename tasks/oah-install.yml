@@ -4,7 +4,7 @@
 
 - name: Print message
   debug:
-    msg: "Docker is already present {{ docker_check }}"
+    msg: "Docker is already present {{ docker_check.stdout }}"
   when: docker_check.rc == 0
 
 - name: Install Docker
