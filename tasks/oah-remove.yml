@@ -12,7 +12,7 @@
 
 - name: Display Docker container ID
   debug:
-    msg: "Docker ID: {{ docker_image}}"
+    msg: "Docker ID:{{ docker_image.images[0].Id }}"
 
 - name: Print message
   debug:
