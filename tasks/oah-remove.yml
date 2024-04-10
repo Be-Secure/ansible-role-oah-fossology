@@ -5,6 +5,7 @@
   failed_when: false
 
 - name: Get Docker image facts
+  become: yes
   community.docker.docker_image_info:
     name: fossology
   register: docker_image
