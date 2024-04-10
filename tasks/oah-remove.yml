@@ -6,8 +6,7 @@
 
 - name: Get Docker image facts
   community.docker.docker_image_info:
-    filters:
-      reference: fossology
+    name: fossology
   register: docker_image
 
 - name: Display Docker container ID
