@@ -8,12 +8,14 @@
   when: docker_check.rc != 0
 
 - name: Install Docker
+  become: yes
   apt:
     name: docker.io
     state: present
   when: docker_check.rc != 0
 
 - name: Install Docker Compose
+  become: yes
   apt:
     name: docker-compose
     state: present
@@ -31,6 +33,7 @@
   when: result.rc != 0
 
 - name: Make sure docker is started
+  become: yes
   service:
     name: docker
     state: started
