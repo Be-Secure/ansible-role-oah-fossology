@@ -4,6 +4,16 @@
   register: fossology_image_check
   failed_when: false
 
+- name: Get Docker image facts
+  docker_image_facts:
+    filters:
+      reference: fossology
+  register: docker_image
+
+- name: Display Docker container ID
+  debug:
+    msg: "Docker ID: {{ docker_image.images[0].Id }}"
+
 - name: Print message
   debug:
     msg: Fossology image does not exist
