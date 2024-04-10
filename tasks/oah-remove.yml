@@ -11,7 +11,7 @@
 
 - name: Display Docker container ID
   debug:
-    msg: "Docker ID: {{ docker_image.images[0].Id }}"
+    msg: "Docker ID: {{ docker_image}}"
 
 - name: Print message
   debug:
