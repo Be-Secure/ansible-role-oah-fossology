@@ -7,7 +7,7 @@
 - name: Get Docker image facts
   become: yes
   community.docker.docker_container_info:
-    name: fossology
+    name: fossology/fossology
   register: docker_image
 
 - name: Display Docker container ID
