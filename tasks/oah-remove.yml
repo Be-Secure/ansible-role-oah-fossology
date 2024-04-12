@@ -43,7 +43,7 @@
       command: "docker stop {{ docker_container_id.stdout }}"
       when: docker_container_id.stdout != ''
 
-  when: fossology_image_check.rc != 0
+  when: fossology_image_check.rc == 0
 
 - name: Removing docker image
   become: yes
