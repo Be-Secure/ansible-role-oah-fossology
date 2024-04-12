@@ -32,7 +32,7 @@
 
 - name: print container id
   debug:
-    msg: "Container id: {{ docker_container_id }}"
+    msg: "Container id: {{ docker_container_id.stdout }}"
 
 # - name: Stop container
 #   become: yes
