@@ -9,13 +9,39 @@
     msg: "Docker ID:{{ fossology_image_check }}"
   failed_when: false
 
+- name: Get image id
+  become: yes
+  shell: docker images --format="{{.Repository}} {{.ID}}" | grep "fossology" | cut -d " " -f 2
+  register: docker_image_id
+  when: fossology_image_check.rc == 0
+
+- name: Check if container running
+  become: yes
+  shell: docker ps --format '{{.ID}} {{.Image}}' | grep "fossology" | cut -d " " -f 1
+  register: docker_container_id
+  failed_when: false
+
+- name: print container id
+  debug:
+    msg: "Container id: {{ docker_container_id }}"
+
+# - name: Stop container
+#   become: yes
+#   shell: docker stop 
+
 - name: Print message
   debug:
     msg: Fossology image does not exist
   when: fossology_image_check.rc != 0
 
-- name: Removing docker image
-  become: yes
-  shell: |
-    docker image rm -f fossology/fossology
-  when: fossology_image_check.rc == 0
+# - name: Removing docker image
+#   become: yes
+#   shell: |
+#     docker image rm -f fossology/fossology
+#   when: fossology_image_check.rc == 0
+
+  #get image id using image name
+  #sudo docker images --format="{{.Repository}} {{.ID}}"
+  #stop container using image id
+  #sudo docker stop $(sudo docker ps -q --filter ancestor=63f4cac1a40f)
+
