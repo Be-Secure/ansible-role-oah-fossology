@@ -11,19 +11,22 @@
 
 - name: Get image id
   become: yes
-  command:
-    cmd: docker images --format="{{'{{'}}.Repository{{'}}'}} {{'{{'}}.ID{{'}}'}}"
+  shell: |                                                 
+    image_id=$(docker images --format="{{'{{'}}.Repository{{'}}'}} {{'{{'}}.ID{{'}}'}}" | grep "fossology" | cut -d " " -f 2)
+    echo $image_id
   register: docker_image_id
   failed_when: false
   when: fossology_image_check.rc == 0
 
 - name: print image id
   debug:
-    msg: "image id: {{ docker_image_id }}"
+    msg: "image id: {{ docker_image_id.stdout }}"
 
 - name: Check if container running
   become: yes
-  command: docker ps --format '{{.ID}} {{.Image}}' | grep "fossology" | cut -d " " -f 1
+  shell: |
+    container_id=$(docker ps --format '{{'{{'}}.ID{{'}}'}} {{'{{'}}.Image{{'}}'}}' | grep "fossology" | cut -d " " -f 1)
+    echo $container_id
   register: docker_container_id
   failed_when: false
 
