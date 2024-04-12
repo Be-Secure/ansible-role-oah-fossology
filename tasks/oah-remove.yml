@@ -12,7 +12,7 @@
 - name: Get image id
   become: yes
   shell: |
-    docker images --format="{{\.Repository}} {{\.ID}}" | grep "fossology" | cut -d " " -f 2
+    docker images --format="{{Repository}} {{ID}}" | grep "fossology" | cut -d " " -f 2
   register: docker_image_id
   failed_when: false
   when: fossology_image_check.rc == 0
