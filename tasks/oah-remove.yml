@@ -4,26 +4,26 @@
   register: fossology_image_check
   failed_when: false
 
-- name: Perform docker related tasks
+- name: Stopping docker container if up
   block: 
-    - name: Display Docker images
-      debug:
-        msg: "Docker ID:{{ fossology_image_check }}"
-      failed_when: false
+    # - name: Display Docker images
+    #   debug:
+    #     msg: "Docker ID:{{ fossology_image_check }}"
+    #   failed_when: false
 
-    - name: Get image id
-      become: yes
-      shell: |                                                 
-        image_id=$(docker images --format="{{'{{'}}.Repository{{'}}'}} {{'{{'}}.ID{{'}}'}}" | grep "fossology" | cut -d " " -f 2)
-        echo $image_id
-      register: docker_image_id
-      failed_when: false
-      when: fossology_image_check.rc == 0
+    # - name: Get image id
+    #   become: yes
+    #   shell: |                                                 
+    #     image_id=$(docker images --format="{{'{{'}}.Repository{{'}}'}} {{'{{'}}.ID{{'}}'}}" | grep "fossology" | cut -d " " -f 2)
+    #     echo $image_id
+    #   register: docker_image_id
+    #   failed_when: false
+    #   when: fossology_image_check.rc == 0
 
-    - name: print image id
-      debug:
-        msg: "image id: {{ docker_image_id.stdout }}"
-      when: docker_image_id.stdout != ''
+    # - name: print image id
+    #   debug:
+    #     msg: "image id: {{ docker_image_id.stdout }}"
+    #   when: docker_image_id.stdout != ''
 
     - name: Check if container running
       become: yes
@@ -43,12 +43,13 @@
       command: "docker stop {{ docker_container_id.stdout }}"
       when: docker_container_id.stdout != ''
 
-    - name: Removing docker image
-      become: yes
-      shell: |
-        docker image rmi -f fossology/fossology
-      when: fossology_image_check.rc == 0
   when: fossology_image_check.rc != 0
+
+- name: Removing docker image
+  become: yes
+  shell: |
+    docker image rmi -f fossology/fossology
+  when: fossology_image_check.rc == 0
 
 - name: Print message
   debug:
