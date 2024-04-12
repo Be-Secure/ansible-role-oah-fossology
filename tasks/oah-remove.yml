@@ -4,6 +4,11 @@
   register: fossology_image_check
   failed_when: false
 
+- name: Display Docker images
+  debug:
+    msg: "Docker ID:{{ fossology_image_check }}"
+  failed_when: false
+
 - name: Stopping docker container if up
   block: 
     # - name: Display Docker images
